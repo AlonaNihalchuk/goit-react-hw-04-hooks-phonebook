@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import { v4 as uuidv4 } from "uuid";
 import Form from "../Form/Form";
 import Contacts from "../Contacts/Contacts";
@@ -40,6 +40,17 @@ function App() {
     console.log(contactId);
     setContacts(contacts.filter((contact) => contact.id !== contactId));
   };
+
+  useEffect(() => {
+    const contacts = localStorage.getItem("contacts");
+    const parsedContacts = JSON.parse(contacts);
+
+    setContacts(parsedContacts);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
 
   return (
     <section className="phonebook">
